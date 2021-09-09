@@ -73,7 +73,11 @@ Do not install DORIS_FE and FE_Observer in the same node.
    input doris root password at doris.fe.root.password property.
 6. After install succeed, handle the Doris service operations 'ADD_FE_FOLLOWER' or 'ADD_FE_OBSERVER' or 'ADD_BACKEND'.
 
-## 4.Links
+## 4. TODO
+1. Add hdfs_broker 
+2. Some other TODO list
+3. Bugs
+## 5.Links
 How-To Define Stacks and Services
 https://cwiki.apache.org/confluence/display/AMBARI/How-To+Define+Stacks+and+Services
 
