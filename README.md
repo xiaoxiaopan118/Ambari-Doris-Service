@@ -55,23 +55,24 @@ Do not install DORIS_FE and FE_Observer in the same node.
 
 ## 3.install
 1. Change project dir name.
-   mv Ambari-Doris-Service Doris
+> mv Ambari-Doris-Service Doris
 2. edit package/scripts/params.py
-   change the version and doris_filename as your true value.
-   eg:
-   version = '3.1.0.0-78'
-   doris_filename = 'doris-0.14.0-release'
+> change the version and doris_filename as your true value.
+> eg:
+> version = '3.1.0.0-78'   
+> doris_filename = 'doris-0.14.0-release'
 3. check your yum repos file. change it as your own download_url, before install check the download_url can used.
-   download_url = commands.getoutput(
-   'cat /etc/yum.repos.d/ambari-1.repo | grep "baseurl" | head -1 | awk -F \'=\' \'{print $2"doris/' + doris_filename + '.tar.gz"}\''
-   )
+> download_url = commands.getoutput(
+>   'cat /etc/yum.repos.d/ambari-1.repo | grep "baseurl" | head -1 | awk -F \'=\' \'{print $2"doris/' + doris_filename + '.tar.gz"}\''
+>  )
 4. put Doris dir to ambari-server node /var/lib/ambari-server/resources/common-services
-   ambari-server restart //in manager node
-   ambari-agent restart //in all node
+> ambari-server restart //in manager node
+> ambari-agent restart //in all node
 5. installing.
-   Do not install DORIS_FE and FE_Observer in the same node.
-   input doris root password at doris.fe.root.password property.
-6. After install succeed, handle the Doris service operations 'ADD_FE_FOLLOWER' or 'ADD_FE_OBSERVER' or 'ADD_BACKEND'.
+> Do not install DORIS_FE and FE_Observer in the same node.
+> input doris root password at doris.fe.root.password property.
+6. After install succeed
+> handle the Doris service operations 'ADD_FE_FOLLOWER' or 'ADD_FE_OBSERVER' or 'ADD_BACKEND'.
 
 ## 4. TODO
 1. Add hdfs_broker 
