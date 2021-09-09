@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+    
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+    <property>
+        <name>doris.be.log_dir</name>
+        <value>/var/log/doris/be</value>
+        <description>Doris BE sys log dir path.
+            eg:/var/log/doris/be
+        </description>
+    </property>
+
+    <property>
+        <name>doris.be.sys_log_level</name>
+        <value>INFO</value>
+        <description>Doris BE system log level.
+            eg: INFO, WARNING, ERROR, FATAL
+        </description>
+    </property>
+
+    <property>
+        <name>doris.be.be_port</name>
+        <value>9060</value>
+        <description>Doris BE server port.</description>
+    </property>
+
+    <property>
+        <name>doris.be.rpc_port</name>
+        <value>9070</value>
+        <description>Doris BE server RPC port.</description>
+    </property>
+
+    <property>
+        <name>doris.be.webserver_port</name>
+        <value>8040</value>
+        <description>Doris BE server webserver port.</description>
+    </property>
+
+    <property>
+        <name>doris.be.brpc_port</name>
+        <value>8060</value>
+        <description>Doris BE server brpc port.</description>
+    </property>
+
+    <property>
+        <name>doris.be.heartbeat_service_port</name>
+        <value>9050</value>
+        <description>Doris BE server edit log port.</description>
+    </property>
+
+    <property>
+        <name>doris.be.storage_root_path</name>
+        <value>/var/doris/be/storage</value>
+        <description>Doris BE data storage path.
+            data root path, separate by ';'
+            you can specify the storage medium of each root path, HDD or SSD
+            you can add capacity limit at the end of each root path, seperate by ','
+            eg:
+            /home/disk1/doris.HDD,50;/home/disk2/doris.SSD,1;/home/disk2/doris
+            explain:
+            /home/disk1/doris.HDD,50; capacity limit is 50GB, HDD;
+            /home/disk2/doris.SSD,1; capacity limit is 1GB, SSD;
+            /home/disk2/doris; capacity limit is disk capacity, HDD(default)
+        </description>
+        <value-attributes>
+            <type>directories</type>
+        </value-attributes>
+    </property>
+
+
+    <!--this will add to fe.conf -->
+    <property>
+        <name>content</name>
+        <description>This is the conf template for fe.conf file</description>
+        <value>
+#####################################################################
+## The uppercase properties are read and exported by bin/start_be.sh.
+## To see all Backend configurations,
+#####################################################################
+
+PPROF_TMPDIR={{doris_be_log_dir}}
+
+# INFO, WARNING, ERROR, FATAL
+sys_log_level = {{doris_be_sys_log_level}}
+
+# ports for admin, web, heartbeat service
+be_port = {{doris_be_be_port}}
+be_rpc_port = {{doris_be_rpc_port}}
+webserver_port = {{doris_be_webserver_port}}
+heartbeat_service_port = {{doris_be_heartbeat_service_port}}
+brpc_port = {{doris_be_brpc_port}}
+
+# Choose one if there are more than one ip except loopback address.
+# Note that there should at most one ip match this list.
+# If no ip match this rule, will choose one randomly.
+# use CIDR format, e.g. 10.10.10.0/24
+# Default value is empty.
+# priority_networks = 10.10.10.0/24;192.168.0.0/16
+priority_networks = {{doris_be_priority_networks}}
+
+# data root path, separate by ';'
+# you can specify the storage medium of each root path, HDD or SSD
+# you can add capacity limit at the end of each root path, seperate by ','
+# eg:
+# storage_root_path = /home/disk1/doris.HDD,50;/home/disk2/doris.SSD,1;/home/disk2/doris
+# /home/disk1/doris.HDD, capacity limit is 50GB, HDD;
+# /home/disk2/doris.SSD, capacity limit is 1GB, SSD;
+# /home/disk2/doris, capacity limit is disk capacity, HDD(default)
+#
+# you also can specify the properties by setting property:value', seperate by ','
+# property 'medium' has a higher priority than the extension of path
+#
+# Default value is ${DORIS_HOME}/storage, you should create it by hand.
+# storage_root_path = ${DORIS_HOME}/storage
+storage_root_path = {{doris_be_storage_root_path}}
+
+# Advanced configurations
+# sys_log_dir = ${DORIS_HOME}/log
+# sys_log_roll_mode = SIZE-MB-1024
+# sys_log_roll_num = 10
+# sys_log_verbose_modules = *
+# log_buffer_level = -1
+# palo_cgroups
+sys_log_dir = {{doris_be_log_dir}}
+sys_log_roll_mode = SIZE-MB-1024
+sys_log_roll_num = 10
+
+# config end
+
+
+        </value>
+        <value-attributes>
+            <type>content</type>
+        </value-attributes>
+    </property>
+
+</configuration>

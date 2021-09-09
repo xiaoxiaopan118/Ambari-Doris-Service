@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<metainfo>
+    <schemaVersion>2.0</schemaVersion>
+    <services>
+        <service>
+            <name>DORIS</name>
+            <displayName>Doris</displayName>
+            <comment>Doris是基于MPP的交互式SQL数据仓库。</comment>
+            <version>0.14.0</version>
+            <components>
+                <component>
+                    <name>DORIS_FE</name>
+                    <displayName>Doris Frontend</displayName>
+                    <category>MASTER</category>
+                    <cardinality>1+</cardinality>
+                    <commandScript>
+                        <script>scripts/doris_frontend.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>1200</timeout>
+                    </commandScript>
+
+                    <customCommands>
+                        <customCommand>
+                            <name>ADD_FE_FOLLOWER</name>
+                            <commandScript>
+                                <script>scripts/doris_frontend.py</script>
+                                <scriptType>PYTHON</scriptType>
+                                <timeout>600</timeout>
+                            </commandScript>
+                        </customCommand>
+                        <customCommand>
+                            <name>ADD_FE_OBSERVER</name>
+                            <commandScript>
+                                <script>scripts/doris_frontend.py</script>
+                                <scriptType>PYTHON</scriptType>
+                                <timeout>600</timeout>
+                            </commandScript>
+                        </customCommand>
+                        <customCommand>
+                            <name>ADD_BACKEND</name>
+                            <commandScript>
+                                <script>scripts/doris_frontend.py</script>
+                                <scriptType>PYTHON</scriptType>
+                                <timeout>600</timeout>
+                            </commandScript>
+                        </customCommand>
+                    </customCommands>
+
+                    <logs>
+                        <log>
+                            <logId>doris_frontend</logId>
+                            <primary>true</primary>
+                        </log>
+                    </logs>
+                </component>
+
+                <component>
+                    <name>FE_Observer</name>
+                    <displayName>Doris Frontend Observer</displayName>
+                    <category>SLAVE</category>
+                    <cardinality>0+</cardinality>
+                    <commandScript>
+                        <script>scripts/doris_frontend.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>1200</timeout>
+                    </commandScript>
+                    <logs>
+                        <log>
+                            <logId>doris_frontend</logId>
+                            <primary>true</primary>
+                        </log>
+                    </logs>
+                </component>
+
+                <component>
+                    <name>DORIS_BE</name>
+                    <displayName>Doris Backend</displayName>
+                    <category>SLAVE</category>
+                    <cardinality>1+</cardinality>
+                    <commandScript>
+                        <script>scripts/doris_backend.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>1200</timeout>
+                    </commandScript>
+                    <logs>
+                        <log>
+                            <logId>doris_backend</logId>
+                            <primary>true</primary>
+                        </log>
+                    </logs>
+                </component>
+            </components>
+
+            <commandScript>
+                <script>scripts/service_check.py</script>
+                <scriptType>PYTHON</scriptType>
+                <timeout>300</timeout>
+            </commandScript>
+
+
+            <configuration-dependencies>
+                <config-type>fe.conf</config-type>
+                <config-type>be.conf</config-type>
+                <config-type>odbcinst.ini</config-type>
+            </configuration-dependencies>
+
+            <restartRequiredAfterChange>true</restartRequiredAfterChange>
+
+            <quickLinksConfigurations>
+                <quickLinksConfiguration>
+                    <fileName>quicklinks.json</fileName>
+                    <default>true</default>
+                </quickLinksConfiguration>
+            </quickLinksConfigurations>
+
+        </service>
+    </services>
+</metainfo>

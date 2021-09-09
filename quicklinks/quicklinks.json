@@ -1,0 +1,25 @@
+{
+  "name": "default",
+  "description": "default quick links configuration",
+  "configuration": {
+    "protocol":
+    {
+      "type":"https"
+    },
+    "links": [
+      {
+        "name": "Doris-UI",
+        "label": "Doris UI",
+        "requires_user_name": "false",
+        "component_name": "DORIS_FE",
+        "url": "%@://%@:%@/",
+        "port":{
+          "http_property": "doris.fe.http_port",
+          "http_default_port": "8030",
+          "regex": "\\w*:(\\d+)",
+          "site": "fe"
+        }
+      }
+    ]
+  }
+}
